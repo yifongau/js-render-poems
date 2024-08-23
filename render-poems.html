@@ -19,7 +19,7 @@ function RndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-function shuffle(array) {
+function shuffle(array) { //TODO: rewrite function to have no side effects
   let currentIndex = array.length;
   while (currentIndex != 0) {
     let randomIndex = Math.floor(Math.random() * currentIndex);
@@ -29,18 +29,32 @@ function shuffle(array) {
   }
 }
 
-
 // RENDER FUNCTIONS
-function filterEmptyString(string) {
-  let poemNorm = [ ]
-  if (string !== '') {
-    poemNorm.push(string);
+function filterEmptyString(array) {
+  let filteredArray = [ ]
+  for (let i = 0; i < array.length; i++) {
+    string = array[i]
+    if (string !== '') {
+      filteredArray.push(string);
+    }
   }
-  return poemNorm
+  return filteredArray
 }
-  
+///////////////
+// MAIN LOOP //
+///////////////
+
+while (true) {
+let array = [ "", "hello", "world" ]
+console.log(array)
+console.log(array[1])
+array = filterEmptyString(array)
+console.log(array)
+break
+
 function stanzaSplit(poemSource) {
   console.log("stanzaSplit")
+  let poemNorm = [ ]
 
   poemSplit = poemSource.split(/(\n\n)/) // breek per strofe
 
@@ -133,6 +147,6 @@ function renderPoem(poemNorm) {
 }
 
 renderPoem(poemNorm)
-
+}
 </script>
 </html>
