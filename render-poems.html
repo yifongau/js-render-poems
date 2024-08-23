@@ -1,152 +1,165 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>
-Parse poems
-</title>
+  <title>
+    Parse poems
+  </title>
 </head>
+
 <body>
   <div id="presentation">
 </body>
-<script> 
+<script>
 
 
-const poems = [ "Liefde\n\nik droom dus ben ik niet\n\nik droom dat iemand de deur intrapt\nniet voor de grap maar voor een politieke moord\n\nik droom dat ik niet ben\n\nik droom dat ik dood ga\nniet voor de grap maar voor niets\n\nik droom dat er een ik is\n\nik droom dat ik eet en drink\nvoor de grap maar ook voor jou", "Poëzie is kinderspel\n\nover het krakende ei\ndwaalt een hemelse bode\nop zoek naar zijn antipode\nen dat zijt gij\n\nmogelijk dat men op zulk een kleine schaal\nniet denken kan het maakt nijdig\nof men is verveeld dus veel te veilig\ndan is men verloren voor de poëzie\n\nu rest slechts een troost ligt gij op sterven\ngij verveelt u dan ook niet\nen plotseling kan dan pop en bal\nlaat herinnerd u laten weten\ndit was ik en dat was het heelal", "visser van ma yuan\n\nonder wolken vogels varen\nonder golven vliegen vissen\nmaar daartussen rust de visser\n\ngolven worden hoge wolken\nwolken worden hoge golven\nmaar intussen rust de visser", "De zeer oude zingt\n\ner is niet meer bij weinig\nnoch is er minder\nnog is onzeker wat er was\nwat wordt wordt willoos\neerst als het is is het ernst\nhet herinnert zich heilloos\nen blijft ijlings\n\nalles van waarde is weerloos\nwordt van aanraakbaarheid rijk\nen aan alles gelijk\n\nals het hart van de tijd\nals het hart van de tijd", "ik draai een kleine revolutie af\n\nik draai een kleine revolutie af\nik draai een kleine mooie revolutie af\nik ben niet langer van het land\nik ben weer water\nik draag schuimende koppen op mijn hoofd\nik draag schietende schimmen in mijn hoofd\nop mijn rug rust een zeemeermin\nop mijn rug rust de wind\nde wind en de zeemeermin zingen\nde schuimende koppen ruisen\nde schietende schimmen vallen\n\nik draai een kleine mooie ritselende revolutie af\nen ik val en ik ruis en ik zing", "de rivier\n\nuit al haar armen brandt de rivier onder de rotsen\nen onder de kleine zon boven de bossen\nspuwt naar tellurische wortels naar de staart van de wolk\nen met gesperde muil dwars door deinende scherven zij zwermt\nmet grillige warmte over de wereld\n\nde duisternis dicht bij haar buik buigen gulzige bloemen\nen daar is een hol en een poel en het kraken en zoemen\nvan een paar draken in de avond niet veraf op een graf\nstaande een uil staart naar een glazen galg daar grof\ngebouwde rotsen omringen de melodische afgrond\n\nach altijd en altijd hangen natte tongen aan de trieste bergen\ngespleten tongen getande tongen en opgeblazen\nronkende tongen en in de dalen in de stenen en lemen cocons\nacademisch zingende mannen manmoedig wanhopig\nzingende mannen en vrouwen vaag draperend de ruimte\n\nmaar een adder de lichtgeaderde rivier spartelt en\nknaagt aan het wenende vlees van de wind\nwat geeft dat klagen? sneeuw sneeuwt over vervaarlijke\nen ook over bedaagde ogen en alles raakt los in de nacht\nvoort stromende argeloos tomeloos maar niet verlost\nvan de klagende nacht\n" ];
+  const poems = ["Liefde\n\nik droom dus ben ik niet\n\nik droom dat iemand de deur intrapt\nniet voor de grap maar voor een politieke moord\n\nik droom dat ik niet ben\n\nik droom dat ik dood ga\nniet voor de grap maar voor niets\n\nik droom dat er een ik is\n\nik droom dat ik eet en drink\nvoor de grap maar ook voor jou", "Poëzie is kinderspel\n\nover het krakende ei\ndwaalt een hemelse bode\nop zoek naar zijn antipode\nen dat zijt gij\n\nmogelijk dat men op zulk een kleine schaal\nniet denken kan het maakt nijdig\nof men is verveeld dus veel te veilig\ndan is men verloren voor de poëzie\n\nu rest slechts een troost ligt gij op sterven\ngij verveelt u dan ook niet\nen plotseling kan dan pop en bal\nlaat herinnerd u laten weten\ndit was ik en dat was het heelal", "visser van ma yuan\n\nonder wolken vogels varen\nonder golven vliegen vissen\nmaar daartussen rust de visser\n\ngolven worden hoge wolken\nwolken worden hoge golven\nmaar intussen rust de visser", "De zeer oude zingt\n\ner is niet meer bij weinig\nnoch is er minder\nnog is onzeker wat er was\nwat wordt wordt willoos\neerst als het is is het ernst\nhet herinnert zich heilloos\nen blijft ijlings\n\nalles van waarde is weerloos\nwordt van aanraakbaarheid rijk\nen aan alles gelijk\n\nals het hart van de tijd\nals het hart van de tijd", "ik draai een kleine revolutie af\n\nik draai een kleine revolutie af\nik draai een kleine mooie revolutie af\nik ben niet langer van het land\nik ben weer water\nik draag schuimende koppen op mijn hoofd\nik draag schietende schimmen in mijn hoofd\nop mijn rug rust een zeemeermin\nop mijn rug rust de wind\nde wind en de zeemeermin zingen\nde schuimende koppen ruisen\nde schietende schimmen vallen\n\nik draai een kleine mooie ritselende revolutie af\nen ik val en ik ruis en ik zing", "de rivier\n\nuit al haar armen brandt de rivier onder de rotsen\nen onder de kleine zon boven de bossen\nspuwt naar tellurische wortels naar de staart van de wolk\nen met gesperde muil dwars door deinende scherven zij zwermt\nmet grillige warmte over de wereld\n\nde duisternis dicht bij haar buik buigen gulzige bloemen\nen daar is een hol en een poel en het kraken en zoemen\nvan een paar draken in de avond niet veraf op een graf\nstaande een uil staart naar een glazen galg daar grof\ngebouwde rotsen omringen de melodische afgrond\n\nach altijd en altijd hangen natte tongen aan de trieste bergen\ngespleten tongen getande tongen en opgeblazen\nronkende tongen en in de dalen in de stenen en lemen cocons\nacademisch zingende mannen manmoedig wanhopig\nzingende mannen en vrouwen vaag draperend de ruimte\n\nmaar een adder de lichtgeaderde rivier spartelt en\nknaagt aan het wenende vlees van de wind\nwat geeft dat klagen? sneeuw sneeuwt over vervaarlijke\nen ook over bedaagde ogen en alles raakt los in de nacht\nvoort stromende argeloos tomeloos maar niet verlost\nvan de klagende nacht\n"];
 
-// RANDOMN FUNCTIONS
-//
-function RndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-
-function shuffle(array) { //TODO: rewrite function to have no side effects
-  let currentIndex = array.length;
-  while (currentIndex != 0) {
-    let randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+  // RANDOMN FUNCTIONS
+  //
+  function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
   }
-}
 
-// RENDER FUNCTIONS
-function filterEmptyString(array) {
-  let filteredArray = [ ]
-  for (let i = 0; i < array.length; i++) {
-    string = array[i]
-    if (string !== '') {
-      filteredArray.push(string);
+  function pickRandom() {
+    return arguments[randomInteger(0, arguments.length)]
+  }
+
+  function shuffle(array) {
+    let currentIndex = array.length;
+
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
     }
   }
-  return filteredArray
-}
-///////////////
-// MAIN LOOP //
-///////////////
 
-while (true) {
-let array = [ "", "hello", "world" ]
-console.log(array)
-console.log(array[1])
-array = filterEmptyString(array)
-console.log(array)
-break
+  // RENDER FUNCTIONS
+  //
+  function filterEmptyStrings(array) {
+    let filteredArray = []
 
-function stanzaSplit(poemSource) {
-  console.log("stanzaSplit")
-  let poemNorm = [ ]
+    for (let i = 0; i < array.length; i++) {
+      string = array[i]
+      if (string !== '') {
+        filteredArray.push(string);
+      }
+    }
+    return filteredArray
+  }
 
-  poemSplit = poemSource.split(/(\n\n)/) // breek per strofe
+  function stanzaSplit(poem) {
+    console.log("stanzaSplit")
+    splitPoem = poem.split(/(\n\n)/) // breek per strofe
+    let splitPoemHTML = []
 
-  for (let i = 0; i < poemSplit.length; i++) { 
-    let line = poemSplit[i]
-    line = line.replace(/\n\n/g, '<br/>')
-    line = line.replace(/\n/g, '<br/>')
-    filterEmptyString(line)
-  } 
+    for (let i = 0; i < splitPoem.length; i++) {
+      let line = splitPoem[i]
+      line = line.replace(/\n\n/g, '<br/>')
+      line = line.replace(/\n/g, '<br/>')
+      splitPoemHTML.push(line);
+    }
+    return splitPoemHTML
+  }
 
-  console.log(poemNorm)
-}
+  function lineSplit(poem) {
+    console.log("lineSplit")
+    splitPoem = poem.split(/(\n+)/) // breek per regel
+    let splitPoemHTML = []
 
-let poemSource 
+    for (let i = 0; i < splitPoem.length; i++) {
+      let line = splitPoem[i]
+      line = line.replace(/\n\n/, '<br/>')
+      line = line.replace(/\n/, '')
+      splitPoemHTML.push(line);
+    }
+    return splitPoemHTML
+  }
 
-shuffle(poems)
-for (let i = 0; i < poems.length; i++) {
-  poemSource = poems[i]
-}
+  function timedPoem(poem) {
+    let timedPoem = []
 
-// A. Ways of splitting the poem
-//
-
-
-
-function lineSplit(poemSource) {
-  console.log("lineSplit")
-  poemRaw = poemSource.split(/(\n+)/) // breek per regel
-
-  for (let i = 0; i < poemRaw.length; i++) { 
-    let line = poemRaw[i]
-    line = line.replace(/\n\n/, '<br/>')
-    line = line.replace(/\n/, '')
-    filterEmptyString(line)
-    
-  } 
-
-  console.log(poemNorm)
-}
-
-let splitManner = RndInteger(0, 1)
-console.log(splitManner)
-
-if ( splitManner == 0 ) {
-  stanzaSplit(poemSource)
-}
-else if (splitManner == 1) {
-  lineSplit(poemSource)
-}
+    for (let i = 0; i < poem.length; i++) {
+      line = poem[i]
+      delay = randomInteger(100, 20000)
+      interval = randomInteger(100, 500)
+      //let timing = [ ]
+      let timedLine = {}
+      timedLine["string"] = line
+      timedLine["delay"] = delay
+      timedLine["interval"] = interval
+      timedLine["length"] = line.length
+      timedPoem.push(timedLine)
+    }
+    return timedPoem
+  }
 
 
-// B. Ways of timing rendering of poem
-//
-function renderPoem(poemNorm) {
-  for (let i = 0; i < poemNorm.length; i++) { 
 
 
-    // initialize divs outside of interval, so lines will be in in correct order
-    let newDiv = document.createElement("div")
-    newDiv.id = `div${i}` 
-    document.getElementById("presentation").appendChild(newDiv);
 
-    //TODO: poems with a lot of whitespace have higher chance of render starting with only white space
-    function printLine(afterPoemRender, afterPoemDelay) { 
+  ///////////////
+  // MAIN LOOP //
+  ///////////////
 
-      let line = poemNorm[i]
-      let j = 0 // initialize character counter
-      let interval = RndInteger(100, 200)
+  shuffle(poems)
+  //for (let i = 0; i < poems.length; i++) {
+  for (let i = poems.length - 1; i < poems.length; i++) {
+    poem = poems[i]
+    console.log(poem)
+    filteredPoem = filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem)))
+    console.log(filteredPoem)
+    timings = timedPoem(filteredPoem)
+    console.log(timings)
 
-      console.log(line)
-      console.log(i)
-      console.log(`Delay is ${delay}`)
-      console.log(`Interval is ${interval}`)
+    break
 
-      let timer = setInterval( function() {
-          document.getElementById(`div${i}`).innerHTML = line.slice(0, j);
-          if ( j > (line.length - 1)) {
-            clearInterval(timer);
-          } else {
-            j++;
+
+
+
+
+    // B. Ways of timing rendering of poem
+    //
+    function renderPoem(poemPreRender) {
+      for (let i = 0; i < poemPreRender.length; i++) {
+        // initialize divs outside of interval, so lines will be in in correct order
+        let newDiv = document.createElement("div")
+        newDiv.id = `div${i}`
+        document.getElementById("presentation").appendChild(newDiv);
+
+        //TODO: poems with a lot of whitespace have higher chance of render starting with only white space
+        function printLine() {
+
+          let line = poemNorm[i]
+          let j = 0 // initialize character counter
+          let interval = randomInteger(100, 200)
+
+          console.log(line)
+          console.log(i)
+          console.log(`Delay is ${delay}`)
+          console.log(`Interval is ${interval}`)
+
+          let timer = setInterval(function () {
+            document.getElementById(`div${i}`).innerHTML = line.slice(0, j);
+            if (j > (line.length - 1)) {
+              clearInterval(timer);
+            } else {
+              j++;
             }
-      }, interval)
+          }, interval)
 
 
+        }
+
+        let delay = randomInteger(100, 20000)
+        setTimeout(printLine, delay)
+      }
     }
 
-    let delay = RndInteger(100, 20000)
-    setTimeout(printLine, delay)
+    renderPoem(poemNorm)
   }
-}
-
-renderPoem(poemNorm)
-}
 </script>
+
 </html>
