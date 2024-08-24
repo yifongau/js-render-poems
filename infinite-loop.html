@@ -2,21 +2,28 @@
 <html>
 
 <head>
-  <title>
-    Parse poems
-  </title>
+    <title>
+        Infinite loop
+    </title>
 </head>
 
 <body>
-  <div id="presentation">
+    <div id="presentation">
 </body>
 <script>
+        let i = 0
+    for (let i = 0; i < 5;) {
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
- // while (true) {
- //   for (let i = 0; i < 10; i++) {
-        console.log("hello")
-  //  }
-  //}
+        console.log(`Hello ${i}`);
+        i++
+        
+
+
+    }
 </script>
 
 </html>

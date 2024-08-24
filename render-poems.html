@@ -81,13 +81,6 @@
   // RENDER FUNCTIONS
   //
 
-  function finishPoem() {
-    setTimeout(function () {
-      let delay = randomInteger(3000, 10000)
-      document.getElementById("presentation").innerHTML = ""
-    }, delay)
-  }
-
   function timePoem(poem) {
     let timedPoem = []
 
@@ -120,11 +113,9 @@
     return timedPoem
   }
 
-  function preRenderPoem(timedPoem) {
+  function renderPoem(timedPoem) {
 
-    function renderPoem() {
-      //console.log(timedPoem)
-      for (let i = 0; i < timedPoem.length; i++) {
+    for (let i = 0; i < timedPoem.length; i++) {
         let unit = timedPoem[i]
         console.log(unit)
 
@@ -140,17 +131,16 @@
         let placement = unit["placement"]
 
         // The render function
-        function printUnit(callAfterCompletion) {
-          console.log(interval)
-          console.log(placement)
+        function printUnit(onComplete) {
           let char = 0
           let timer = setInterval(function () {
             console.log
             document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
             if (char > (string.length - 1)) {
               clearInterval(timer);
-              if (callAfterCompletion) {
-                callAfterCompletion()
+              console.log(`Unit ${i} completed.`)
+              if (onComplete) {
+                onComplete()
               }
             } else {
               char++;
@@ -164,34 +154,45 @@
         } else {
           setTimeout(printUnit, delay, finishPoem)
         }
+
+
       }
     }
-    return renderPoem
-  }
-
-
-
-
 
   ///////////////
   // MAIN LOOP //
   ///////////////
   //while (true) {
 
-    shuffle(poems)
+  shuffle(poems)
+  for (let poemIndex = 0; poemIndex < poems.length;) {
 
-
-    for (let i = 0; i < poems.length; i++) {
-      console.log(i)
-      let poem = poems[i]
-      let timedPoem = timePoem(filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem))))
-      //console.log(timedPoem)
-      let render = preRenderPoem(timedPoem)
-      render()
-      break
-
-
+    function finishPoem() {
+      let delay = randomInteger(3000, 10000)
+      console.log("Poem completed.")
+      setTimeout(function () {
+        document.getElementById("presentation").innerHTML = ""
+        poemIndex++
+        console.log(poemIndex)
+      }, delay)
     }
+
+    let poem = poems[poemIndex]
+    renderPoem(
+      timePoem(
+        filterEmptyStrings(
+          pickRandom(
+            stanzaSplit(poem), lineSplit(poem)
+          )
+        )
+      )
+    )
+
+  // break
+
+
+
+  }
   //}
 </script>
 
