@@ -116,84 +116,68 @@
   function renderPoem(timedPoem) {
 
     for (let i = 0; i < timedPoem.length; i++) {
-        let unit = timedPoem[i]
-        console.log(unit)
+      let unit = timedPoem[i]
+      console.log(unit)
 
-        // Create divs outside of setTimeout, so units will print in correct order
-        let newDiv = document.createElement("div")
-        newDiv.id = `div${i}`
-        document.getElementById("presentation").appendChild(newDiv);
+      // Create divs outside of setTimeout, so units will print in correct order
+      let newDiv = document.createElement("div")
+      newDiv.id = `div${i}`
+      document.getElementById("presentation").appendChild(newDiv);
 
-        // Retrieve values for each unit
-        let string = unit["string"]
-        let delay = unit["delay"]
-        let interval = unit["interval"]
-        let placement = unit["placement"]
+      // Retrieve values for each unit
+      let string = unit["string"]
+      let delay = unit["delay"]
+      let interval = unit["interval"]
+      let placement = unit["placement"]
 
-        // The render function
-        function printUnit(onComplete) {
-          let char = 0
-          let timer = setInterval(function () {
-            console.log
-            document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
-            if (char > (string.length - 1)) {
-              clearInterval(timer);
-              console.log(`Unit ${i} completed.`)
-              if (onComplete) {
-                onComplete()
-              }
-            } else {
-              char++;
+      // The render function
+      function printUnit(onComplete) {
+        let char = 0
+        let timer = setInterval(function () {
+          console.log
+          document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
+          if (char > (string.length - 1)) {
+            clearInterval(timer);
+            console.log(`Unit ${i} completed.`)
+            if (onComplete) {
+              onComplete()
             }
-          }, interval)
-        }
-
-        // Launch units
-        if (placement != "last") {
-          setTimeout(printUnit, delay)
-        } else {
-          setTimeout(printUnit, delay, finishPoem)
-        }
-
-
+          } else {
+            char++;
+          }
+        }, interval)
       }
-    }
 
+      // Launch units
+      if (placement != "last") {
+        setTimeout(printUnit, delay)
+      } else {
+        setTimeout(printUnit, delay, onLastLine)
+      }
+
+
+    }
+  }
+
+  function onLastLine() {
+    let delay = randomInteger(3000, 10000)
+    console.log("Poem completed.")
+    setTimeout(function () {
+      document.getElementById("presentation").innerHTML = ""
+      loopPoems()
+    }, delay)
+  }
   ///////////////
   // MAIN LOOP //
   ///////////////
-  //while (true) {
 
-  shuffle(poems)
-  for (let poemIndex = 0; poemIndex < poems.length;) {
-
-    function finishPoem() {
-      let delay = randomInteger(3000, 10000)
-      console.log("Poem completed.")
-      setTimeout(function () {
-        document.getElementById("presentation").innerHTML = ""
-        poemIndex++
-        console.log(poemIndex)
-      }, delay)
-    }
-
-    let poem = poems[poemIndex]
-    renderPoem(
-      timePoem(
-        filterEmptyStrings(
-          pickRandom(
-            stanzaSplit(poem), lineSplit(poem)
-          )
-        )
-      )
-    )
-
-  // break
-
-
-
+  function loopPoems() {
+    const poem = poems[Math.floor(Math.random() * poems.length)];
+    renderPoem(timePoem(filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem)))))
   }
-  //}
+  
+  loopPoems()
+
 </script>
 
 </html>
