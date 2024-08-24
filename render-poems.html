@@ -78,16 +78,24 @@
     return splitPoemHTML
   }
 
-  // PRERENDER FUNCTIONS
+  // RENDER FUNCTIONS
   //
+
+  function finishPoem() {
+    setTimeout(function () {
+      let delay = randomInteger(3000, 10000)
+      document.getElementById("presentation").innerHTML = ""
+    }, delay)
+  }
+
   function timePoem(poem) {
     let timedPoem = []
 
     // determine timings for each unit
     for (let i = 0; i < poem.length; i++) {
-      unit = poem[i]
-      delay = randomInteger(100, 20000)
-      interval = randomInteger(100, 500)
+      let unit = poem[i]
+      let delay = randomInteger(100, 20000)
+      let interval = randomInteger(100, 500)
       //let timing = [ ]
       let timedUnit = {}
       timedUnit["string"] = unit
@@ -111,7 +119,6 @@
 
     return timedPoem
   }
-  
 
   function preRenderPoem(timedPoem) {
 
@@ -127,33 +134,37 @@
         document.getElementById("presentation").appendChild(newDiv);
 
         // Retrieve values for each unit
-        string = unit["string"]
-        delay = unit["delay"]
-        interval = unit["interval"]
-        placement = unit["placement"]
+        let string = unit["string"]
+        let delay = unit["delay"]
+        let interval = unit["interval"]
+        let placement = unit["placement"]
 
-        // Launch units
-        setTimeout(function (string, interval, placement) {
+        // The render function
+        function printUnit(callAfterCompletion) {
+          console.log(interval)
+          console.log(placement)
           let char = 0
           let timer = setInterval(function () {
             console.log
             document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
             if (char > (string.length - 1)) {
               clearInterval(timer);
-              console.log(`placement: ${placement}`)
-              return placement
+              if (callAfterCompletion) {
+                callAfterCompletion()
+              }
             } else {
               char++;
             }
           }, interval)
+        }
 
-
-
-        }, delay, string, interval, placement)
-
+        // Launch units
+        if (placement != "last") {
+          setTimeout(printUnit, delay)
+        } else {
+          setTimeout(printUnit, delay, finishPoem)
+        }
       }
-
-
     }
     return renderPoem
   }
@@ -165,63 +176,23 @@
   ///////////////
   // MAIN LOOP //
   ///////////////
+  //while (true) {
 
-  shuffle(poems)
-  //for (let i = 0; i < poems.length; i++) {
-  for (let i = poems.length - 1; i < poems.length; i++) {
-    poem = poems[i]
-    timedPoem = timePoem(filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem))))
-    //console.log(timedPoem)
-    let render = preRenderPoem(timedPoem)
-    render()
+    shuffle(poems)
 
 
-    break
+    for (let i = 0; i < poems.length; i++) {
+      console.log(i)
+      let poem = poems[i]
+      let timedPoem = timePoem(filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem))))
+      //console.log(timedPoem)
+      let render = preRenderPoem(timedPoem)
+      render()
+      break
 
 
-
-
-
-    // B. Ways of timing rendering of poem
-    //
-    function renderPoem(poemPreRender) {
-      for (let i = 0; i < poemPreRender.length; i++) {
-        // initialize divs outside of interval, so lines will be in in correct order
-        let newDiv = document.createElement("div")
-        newDiv.id = `div${i}`
-        document.getElementById("presentation").appendChild(newDiv);
-
-        //TODO: poems with a lot of whitespace have higher chance of render starting with only white space
-        function printLine() {
-
-          let line = poemNorm[i]
-          let j = 0 // initialize character counter
-          let interval = randomInteger(100, 200)
-
-          console.log(line)
-          console.log(i)
-          console.log(`Delay is ${delay}`)
-          console.log(`Interval is ${interval}`)
-
-          let timer = setInterval(function () {
-            document.getElementById(`div${i}`).innerHTML = line.slice(0, j);
-            if (j > (line.length - 1)) {
-              clearInterval(timer);
-            } else {
-              j++;
-            }
-          }, interval)
-
-
-        }
-
-        let delay = randomInteger(100, 20000)
-        setTimeout(printLine, delay)
-      }
     }
-
-    renderPoem(poemNorm)
-  }
+  //}
 </script>
 
 </html>
