@@ -36,7 +36,7 @@
     }
   }
 
-  // RENDER FUNCTIONS
+  // STRING FUNCTIONS
   //
   function filterEmptyStrings(array) {
     let filteredArray = []
@@ -78,9 +78,14 @@
     return splitPoemHTML
   }
 
+  // PRERENDER FUNCTIONS
+  //
+  
+  
   function timedPoem(poem) {
-    let timedPoem = []
+    let timedPoem = [ ]
 
+    // determine timings for each line
     for (let i = 0; i < poem.length; i++) {
       line = poem[i]
       delay = randomInteger(100, 20000)
@@ -91,9 +96,36 @@
       timedLine["delay"] = delay
       timedLine["interval"] = interval
       timedLine["length"] = line.length
+      timedLine["duration"] = delay + interval * line.length
       timedPoem.push(timedLine)
     }
+
+    // determine first and last lines to finish
+    let durations = [ ]
+    for (let i = 0; i < timedPoem.length; i++) {
+      duration = timedPoem[i].duration
+      durations.push(duration)
+    }
+    let firstLine = durations.indexOf(Math.min(...durations))
+    let lastLine = durations.indexOf(Math.max(...durations))
+    timedPoem[firstLine]["placement"] = "first"
+    timedPoem[lastLine]["placement"] = "last"
+
     return timedPoem
+  }
+
+  function preRenderedPoem(timedPoem) {
+    let preRenderedPoem
+    
+    console.log(timedPoem)
+
+
+
+
+
+
+
+    return preRenderedPoem
   }
 
 
@@ -108,11 +140,9 @@
   //for (let i = 0; i < poems.length; i++) {
   for (let i = poems.length - 1; i < poems.length; i++) {
     poem = poems[i]
-    console.log(poem)
     filteredPoem = filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem)))
-    console.log(filteredPoem)
-    timings = timedPoem(filteredPoem)
-    console.log(timings)
+    timings = preRenderedPoem(timedPoem(filteredPoem))
+    //  console.log(timings)
 
     break
 
