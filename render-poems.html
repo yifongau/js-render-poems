@@ -78,10 +78,8 @@
     return splitPoemHTML
   }
 
-  // RENDER FUNCTIONS
+  // PRERENDER FUNCTIONS
   //
-
-
   function timePoem(poem) {
     let timedPoem = []
 
@@ -113,6 +111,7 @@
 
     return timedPoem
   }
+  
 
   function preRenderPoem(timedPoem) {
 
@@ -120,6 +119,7 @@
       //console.log(timedPoem)
       for (let i = 0; i < timedPoem.length; i++) {
         let unit = timedPoem[i]
+        console.log(unit)
 
         // Create divs outside of setTimeout, so units will print in correct order
         let newDiv = document.createElement("div")
@@ -127,26 +127,29 @@
         document.getElementById("presentation").appendChild(newDiv);
 
         // Retrieve values for each unit
-        console.log(string = unit["string"])
-        console.log(`Delay: ${delay = unit["delay"]}`)
-        console.log(`Interval: ${interval = unit["interval"]}`)
+        string = unit["string"]
+        delay = unit["delay"]
+        interval = unit["interval"]
+        placement = unit["placement"]
 
         // Launch units
-        setTimeout(function (string, interval) {
+        setTimeout(function (string, interval, placement) {
           let char = 0
           let timer = setInterval(function () {
             console.log
             document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
             if (char > (string.length - 1)) {
               clearInterval(timer);
+              console.log(`placement: ${placement}`)
+              return placement
             } else {
               char++;
             }
           }, interval)
 
-          
 
-        }, delay, string, interval)
+
+        }, delay, string, interval, placement)
 
       }
 
