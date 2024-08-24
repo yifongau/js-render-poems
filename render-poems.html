@@ -56,10 +56,10 @@
     let splitPoemHTML = []
 
     for (let i = 0; i < splitPoem.length; i++) {
-      let line = splitPoem[i]
-      line = line.replace(/\n\n/g, '<br/>')
-      line = line.replace(/\n/g, '<br/>')
-      splitPoemHTML.push(line);
+      let unit = splitPoem[i]
+      unit = unit.replace(/\n\n/g, '<br/>')
+      unit = unit.replace(/\n/g, '<br/>')
+      splitPoemHTML.push(unit);
     }
     return splitPoemHTML
   }
@@ -70,62 +70,89 @@
     let splitPoemHTML = []
 
     for (let i = 0; i < splitPoem.length; i++) {
-      let line = splitPoem[i]
-      line = line.replace(/\n\n/, '<br/>')
-      line = line.replace(/\n/, '')
-      splitPoemHTML.push(line);
+      let unit = splitPoem[i]
+      unit = unit.replace(/\n\n/, '<br/>')
+      unit = unit.replace(/\n/, '')
+      splitPoemHTML.push(unit);
     }
     return splitPoemHTML
   }
 
-  // PRERENDER FUNCTIONS
+  // RENDER FUNCTIONS
   //
-  
-  
-  function timedPoem(poem) {
-    let timedPoem = [ ]
 
-    // determine timings for each line
+
+  function timePoem(poem) {
+    let timedPoem = []
+
+    // determine timings for each unit
     for (let i = 0; i < poem.length; i++) {
-      line = poem[i]
+      unit = poem[i]
       delay = randomInteger(100, 20000)
       interval = randomInteger(100, 500)
       //let timing = [ ]
-      let timedLine = {}
-      timedLine["string"] = line
-      timedLine["delay"] = delay
-      timedLine["interval"] = interval
-      timedLine["length"] = line.length
-      timedLine["duration"] = delay + interval * line.length
-      timedPoem.push(timedLine)
+      let timedUnit = {}
+      timedUnit["string"] = unit
+      timedUnit["delay"] = delay
+      timedUnit["interval"] = interval
+      timedUnit["length"] = unit.length
+      timedUnit["duration"] = delay + interval * unit.length
+      timedPoem.push(timedUnit)
     }
 
-    // determine first and last lines to finish
-    let durations = [ ]
+    // determine first and last units to finish
+    let durations = []
     for (let i = 0; i < timedPoem.length; i++) {
       duration = timedPoem[i].duration
       durations.push(duration)
     }
-    let firstLine = durations.indexOf(Math.min(...durations))
-    let lastLine = durations.indexOf(Math.max(...durations))
-    timedPoem[firstLine]["placement"] = "first"
-    timedPoem[lastLine]["placement"] = "last"
+    let firstUnit = durations.indexOf(Math.min(...durations))
+    let lastUnit = durations.indexOf(Math.max(...durations))
+    timedPoem[firstUnit]["placement"] = "first"
+    timedPoem[lastUnit]["placement"] = "last"
 
     return timedPoem
   }
 
-  function preRenderedPoem(timedPoem) {
-    let preRenderedPoem
-    
-    console.log(timedPoem)
+  function preRenderPoem(timedPoem) {
+
+    function renderPoem() {
+      //console.log(timedPoem)
+      for (let i = 0; i < timedPoem.length; i++) {
+        let unit = timedPoem[i]
+
+        // Create divs outside of setTimeout, so units will print in correct order
+        let newDiv = document.createElement("div")
+        newDiv.id = `div${i}`
+        document.getElementById("presentation").appendChild(newDiv);
+
+        // Retrieve values for each unit
+        console.log(string = unit["string"])
+        console.log(`Delay: ${delay = unit["delay"]}`)
+        console.log(`Interval: ${interval = unit["interval"]}`)
+
+        // Launch units
+        setTimeout(function (string, interval) {
+          let char = 0
+          let timer = setInterval(function () {
+            console.log
+            document.getElementById(`div${i}`).innerHTML = string.slice(0, char);
+            if (char > (string.length - 1)) {
+              clearInterval(timer);
+            } else {
+              char++;
+            }
+          }, interval)
+
+          
+
+        }, delay, string, interval)
+
+      }
 
 
-
-
-
-
-
-    return preRenderedPoem
+    }
+    return renderPoem
   }
 
 
@@ -140,9 +167,11 @@
   //for (let i = 0; i < poems.length; i++) {
   for (let i = poems.length - 1; i < poems.length; i++) {
     poem = poems[i]
-    filteredPoem = filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem)))
-    timings = preRenderedPoem(timedPoem(filteredPoem))
-    //  console.log(timings)
+    timedPoem = timePoem(filterEmptyStrings(pickRandom(stanzaSplit(poem), lineSplit(poem))))
+    //console.log(timedPoem)
+    let render = preRenderPoem(timedPoem)
+    render()
+
 
     break
 
